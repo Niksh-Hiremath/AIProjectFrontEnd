@@ -1,31 +1,53 @@
-import { StyleSheet } from 'react-native';
+import React from "react";
+import { View, Text, TouchableOpacity } from "react-native";
+import {
+  VideoCameraIcon,
+  VideoCameraSlashIcon,
+} from "react-native-heroicons/outline";
+import { useState } from "react";
 
-import EditScreenInfo from '@/components/EditScreenInfo';
-import { Text, View } from '@/components/Themed';
+const App: React.FC = () => {
+  const [active, setActive] = useState(false);
 
-export default function TabOneScreen() {
+  function handlePress() {
+    setActive(!active);
+    if (active) {
+      // Make API call to backend to start
+      console.log("Camera is active");
+    } else {
+      // Make API call to backend to stop
+      console.log("Camera is inactive");
+    }
+  }
+
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Tab One</Text>
-      <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
-      <EditScreenInfo path="app/(tabs)/index.tsx" />
+    <View className="bg-primary p-10 rounded-3xl m-10 flex-auto flex-col justify-between items-center content-center">
+      {/* Main Content Container */}
+      <View className="bg-white rounded-3xl">
+        <Text className="text-5xl text-center p-10 m-auto">
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+          eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
+          minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+          aliquip ex ea commodo consequat.
+        </Text>
+      </View>
+      {/* Camera Button */}
+      <TouchableOpacity
+        className="bg-white rounded-full items-center m-auto p-10"
+        onPress={handlePress}
+      >
+        {active ? (
+          <VideoCameraIcon className="fill-primary" color="white" size={120} />
+        ) : (
+          <VideoCameraSlashIcon
+            className="fill-primary"
+            color="white"
+            size={120}
+          />
+        )}
+      </TouchableOpacity>
     </View>
   );
-}
+};
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  title: {
-    fontSize: 20,
-    fontWeight: 'bold',
-  },
-  separator: {
-    marginVertical: 30,
-    height: 1,
-    width: '80%',
-  },
-});
+export default App;
