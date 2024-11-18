@@ -17,8 +17,8 @@ import React from "react";
 
 const App: React.FC = () => {
   const [active, setActive] = useState(false);
-  const [camera, setCamera] = useState(null);
-  const [record, setRecord] = useState(null);
+  const [camera, setCamera] = useState<CameraView | null>(null);
+  const [record, setRecord] = useState<string | null>(null);
   const [recording, setRecording] = useState(false);
   const onCameraReady = () => {
     setRecording(true);
@@ -27,12 +27,16 @@ const App: React.FC = () => {
     (async () => {
       if (recording && camera) {
         console.log("Recording");
-        const localRecord = camera.record();
-        console.log(localRecord)
-        localRecord.then((r) => {
-          console.log(r);
-          setRecord(r.uri);
-          console.log(record);
+        const localRecord = camera.recordAsync();
+        console.log(localRecord);
+        localRecord.then((r: { uri: string } | undefined) => {
+          if (r) {
+            console.log(r);
+            setRecord(r.uri);
+            console.log(record);
+          } else {
+            console.error("Recording failed");
+          }
         });
       }
     })();

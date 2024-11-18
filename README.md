@@ -4,7 +4,8 @@ This repository holds the code for the ios App.
 
 ---
 
-## To run:
+## Run App
+
 ```bash
 npx expo start -c
 ```
